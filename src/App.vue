@@ -72,7 +72,7 @@ export default {
       inputFieldShow: false,
       // ------------------------
       modalShow: false,
-      modalHeader: "TA2LSM Giwaway",
+      modalHeader: "TA2LSM Giweaway",
       modalText: "Sign up and get your free tools!",
       // ------------------------
       modalTwoShow: false,
