@@ -13,8 +13,9 @@
   </div>
   <br>
 
-  <!-- v-show may be better option instead of v-if. This div needs to be injected in html file for faster operations -->
-  <div v-show="modalShow">
+  <!-- v-show may be better option instead of v-if. This div needs to be injected in html file for faster operations.
+  But when teleport used use v-if -->
+  <teleport to="#popupModels" v-if="modalShow">
     <!-- using props. props must be declerated in Modal, otherwise we can't use them -->
     <!-- All props will be converted to string as default. Other formats need data binding -->
     <!-- <Modal header="Sign up Now" text="Get %50 discount!"/> -->
@@ -25,7 +26,7 @@
     <!-- <Modal :header="modalHeader" :text="modalText" theme="dark" @closeModal="toggleModal"/> -->
 
     <!-- Using "Slots". Passing template as slot to Modal component -->
-    <Modal theme="dark" @closeModal="toggleModal">
+    <Modal theme="sale" @closeModal="toggleModal">
       <!-- named slot template as "modalLinks" -->
       <template v-slot:modalLinks>
         <a href="#">Sign up Now!</a>
@@ -36,9 +37,22 @@
       <h1>{{ this.modalHeader }}</h1>
       <p style="font-weight: bold;">{{ this.modalText }}</p>   
     </Modal>
-  </div>
-  <button v-show="!modalShow" @click="toggleModal">Open Modal</button>
+  </teleport>
 
+  <!-- these items below will be teleported to div named modals in the index.html -->
+  <teleport to="#popupModels" v-if="modalTwoShow">
+    <Modal theme="dark" @closeModal="toggleModalTwo">
+      <h1>{{ this.modalTwoHeader }}</h1>
+      <p style="font-weight: bold;">{{ this.modalTwoText }}</p>  
+
+      <template v-slot:modalLinks>
+        <a href="#">Sign up Now!</a>
+      </template>
+    </Modal>  
+  </teleport>
+
+  <button style="margin-right: 10px;" v-show="!modalShow" @click="toggleModal">Show Sign up</button>
+  <button  v-show="!modalTwoShow" @click="toggleModalTwo">Show Newsletter</button>
 </template>
 
 
@@ -54,17 +68,25 @@ export default {
 
   data() {
     return {
-      title: "~ First Vue Project ~",
+      title: "~ Vue Modal Project ~",
       inputFieldShow: false,
+      // ------------------------
       modalShow: false,
       modalHeader: "TA2LSM Giwaway",
-      modalText: "Sign up and get your free tools!"
+      modalText: "Sign up and get your free tools!",
+      // ------------------------
+      modalTwoShow: false,
+      modalTwoHeader: "Sign up to the newsletter",
+      modalTwoText: "For updates and promote codes!",      
     }
   },
 
   methods: {
     toggleModal() {
       this.modalShow = !this.modalShow;
+    },
+    toggleModalTwo() {
+      this.modalTwoShow = !this.modalTwoShow;
     },
 
     handleClick() {
@@ -82,7 +104,8 @@ export default {
 
 <!-- These styles below will be injected in head section in html file -->
 <style>
-#app {
+/* .popupModels class needs to be added when teleport is used or popupModels id can be used */
+#app, #popupModels {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

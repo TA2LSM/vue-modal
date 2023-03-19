@@ -19,7 +19,7 @@ naming them with capital letters !!! -->
       <div class="actions">
         <!-- named slot -->
         <slot name="modalLinks">
-          No links...
+          - No links -
         </slot>
       </div>
     </div>
