@@ -3,7 +3,9 @@ when you use lowercase letters as a compoennet name or start
 naming them with capital letters !!! -->
 
 <template>
-  <div class="backdrop">
+  <!-- click.self provides closeModal only works when clicking backdrop
+       itself NOT any child components -->
+  <div class="backdrop" @click.self="closeModal" >
     <!-- adding another dynamic class according data binding value theme -->
     <div class="modal" :class="checkTheme(this.theme)">
       <h1>{{ this.header }}</h1>
@@ -15,8 +17,9 @@ naming them with capital letters !!! -->
 <script>
   // props object MUST be registered here!
   export default {
-    // props: ['header', 'text', 'theme']
     name: 'Modal',
+
+    // props: ['header', 'text', 'theme']
     props: {
       header: String,
       text: String,
@@ -25,21 +28,33 @@ naming them with capital letters !!! -->
     
     methods: {
       checkTheme(theme) {
+        //                            key: value
         if(theme === "sale") return {sale: theme === 'sale'}
         if(theme === "dark") return {dark: theme === 'dark'}
+      },
+
+      // creating custom event named "closeModal". This event will be listened by parent component.
+      closeModal() {
+        this.$emit('closeModal');
       }
     }
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
+<!-- <style scoped> -->
 <style>
   .modal {
-    width: 400px;
-    padding:20px;
-    margin: 200px auto;
     background: white;
     border-radius: 10px;
+    width: 400px;
+    padding: 20px;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
   }
 
   .backdrop {
