@@ -22,7 +22,20 @@
     <!-- header is an array below because of data binding (:) -->
     <!-- <Modal :header="['Sign up Now', 50]" text="Get %50 discount!"/> -->
     <!-- closeModal is a custom event which created by Modal component and being listened here -->
-    <Modal :header="modalHeader" :text="modalText" theme="dark" @closeModal="toggleModal"/>
+    <!-- <Modal :header="modalHeader" :text="modalText" theme="dark" @closeModal="toggleModal"/> -->
+
+    <!-- Using "Slots". Passing template as slot to Modal component -->
+    <Modal theme="dark" @closeModal="toggleModal">
+      <!-- named slot template as "modalLinks" -->
+      <template v-slot:modalLinks>
+        <a href="#">Sign up Now!</a>
+        <a href="#">More Info...</a>
+      </template>
+
+      <!-- these below will be injected between default <slot></slot> in the Modal component -->
+      <h1>{{ this.modalHeader }}</h1>
+      <p style="font-weight: bold;">{{ this.modalText }}</p>   
+    </Modal>
   </div>
   <button v-show="!modalShow" @click="toggleModal">Open Modal</button>
 
@@ -44,8 +57,8 @@ export default {
       title: "~ First Vue Project ~",
       inputFieldShow: false,
       modalShow: false,
-      modalHeader: "Sign up Now",
-      modalText: "Get %50 discount!"
+      modalHeader: "TA2LSM Giwaway",
+      modalText: "Sign up and get your free tools!"
     }
   },
 

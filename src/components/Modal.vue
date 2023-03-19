@@ -7,9 +7,21 @@ naming them with capital letters !!! -->
        itself NOT any child components -->
   <div class="backdrop" @click.self="closeModal" >
     <!-- adding another dynamic class according data binding value theme -->
-    <div class="modal" :class="checkTheme(this.theme)">
+    <!-- <div class="modal" :class="checkTheme(this.theme)">
       <h1>{{ this.header }}</h1>
       <p style="font-weight: bold;">{{ this.text }}</p>
+    </div> -->
+
+    <div class="modal" :class="checkTheme(this.theme)">
+      <!-- default slot. No Information will be showed when there is no data passed here -->
+      <slot>No Information!</slot>
+
+      <div class="actions">
+        <!-- named slot -->
+        <slot name="modalLinks">
+          No links...
+        </slot>
+      </div>
     </div>
   </div>
 </template>
@@ -21,8 +33,8 @@ naming them with capital letters !!! -->
 
     // props: ['header', 'text', 'theme']
     props: {
-      header: String,
-      text: String,
+      // header: String,
+      // text: String,
       theme: String
     },
     
@@ -99,4 +111,30 @@ naming them with capital letters !!! -->
   .modal.dark h1 {
     color: white;
   }
+
+  .modal .actions {
+    text-align: center;
+    margin: 30px 0 10px 0;
+  }
+  .modal .actions a {
+     padding: 8px;
+    border: 2px solid #eee;
+    border-radius: 4px;
+    text-decoration: none;
+    margin: 10px;
+  }
+
+  .modal.sale .actions {
+    color: white;
+  }
+  .modal.sale .actions a{
+    color: white;
+  }
+  .modal.dark .actions {
+    color: white;
+  }
+  .modal.dark .actions a{
+    color: white;
+  }
+
 </style>
