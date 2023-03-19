@@ -4,20 +4,32 @@ naming them with capital letters !!! -->
 
 <template>
   <div class="backdrop">
-    <div class="modal">
-      <h1>Modal Name</h1>
-      <p>Modal component</p>
+    <!-- adding another dynamic class according data binding value theme -->
+    <div class="modal" :class="checkTheme(this.theme)">
+      <h1>{{ this.header }}</h1>
+      <p style="font-weight: bold;">{{ this.text }}</p>
     </div>
   </div>
 </template>
 
 <script>
-// export default {
-//   name: 'Modal',
-//   props: {
-//     msg: String
-//   }
-// }
+  // props object MUST be registered here!
+  export default {
+    // props: ['header', 'text', 'theme']
+    name: 'Modal',
+    props: {
+      header: String,
+      text: String,
+      theme: String
+    },
+    
+    methods: {
+      checkTheme(theme) {
+        if(theme === "sale") return {sale: theme === 'sale'}
+        if(theme === "dark") return {dark: theme === 'dark'}
+      }
+    }
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -56,5 +68,20 @@ naming them with capital letters !!! -->
 
   .modal p {
     font-style: normal;
+  }
+
+  .modal.sale {
+    background: crimson;
+    color: white;
+  }
+  .modal.sale h1 {
+    color: white;
+  }
+  .modal.dark {
+    background: black;
+    color: white;
+  }
+  .modal.dark h1 {
+    color: white;
   }
 </style>

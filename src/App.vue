@@ -1,10 +1,20 @@
+<!-- Use "Vue Language Features (Volar)" plugin for better experience -->
+
 <!-- This is main route component (App.vue) -->
 <!-- Template is a mandatory part -->
 <template>
-  <h1>{{title}}</h1><br>
-  <input type="text" ref="name">
+  <h1>{{ title }}</h1><br>
+  <input type="text" ref="name" style="margin-right: 10px;">
   <button @click="handleClick">Click me!</button>
-  <Modal />
+
+  <!-- using props. props must be declerated in Modal, otherwise we can't use them -->
+  <!-- All props will be converted to string as default. Other formats need data binding -->
+  <!-- <Modal header="Sign up Now" text="Get %50 discount!"/> -->
+
+  <!-- header is an array below because of data binding (:) -->
+  <!-- <Modal :header="['Sign up Now', 50]" text="Get %50 discount!"/> -->
+  <Modal :header="modalHeader" :text="modalText" theme="dark"/>
+
 </template>
 
 
@@ -13,15 +23,16 @@
 import Modal from './components/Modal.vue'
 
 export default {
-  name: 'App',
-   
+  name: 'App',   
   components: {
     Modal
   },
 
   data() {
     return {
-      title: "~ First Vue Project ~"
+      title: "~ First Vue Project ~",
+      modalHeader: "Sign up Now",
+      modalText: "Get %50 discount!"
     }
   },
 
